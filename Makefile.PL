@@ -14,13 +14,14 @@ my %WriteMakefileArgs = (
   EXE_FILES      => [qw()],
   OBJECT         => '',
   BUILD_REQUIRES => {
-  'HTTP::Tiny' => '0',
+  'HTTP::Tiny' => '0.044',
   'Path::Tiny' => '0',
   'URI' => '0'
 }
 ,
   TEST_REQUIRES  => {
-  'Test::More' => '0.88'
+  'Test::More' => '0.88',
+  'Test2::V0'  => '0'
 }
 ,
   PREREQ_PM      => {

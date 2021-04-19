@@ -21,8 +21,8 @@ share {
     my $build = shift;
     require Path::Tiny;
 
-    my $prefix  = Path::Tiny->path($build->install_prop->{prefix})->absolute;
-    my $lib     = $prefix->child('lib')->stringify;
+    my $prefix  = Path::Tiny->new($build->install_prop->{prefix})->absolute;
+    my $lib     = $prefix->child('lib');
     my $include = $prefix->child('include');
     my $dynamic = $prefix->child('lib', 'dynamic');
 
