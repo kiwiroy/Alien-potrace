@@ -72,3 +72,6 @@
 ^\.perltidyrc
 ^\.github
 ^_alien/
+^\.gitattributes
+^\.proverc
+^cpanfile

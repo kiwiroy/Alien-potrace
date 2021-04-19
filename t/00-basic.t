@@ -28,6 +28,7 @@ if (!eval 'use Test::CPAN::Changes; 1') {
 
 my @files;
 find({wanted => sub { /\.pm$/ and push @files, $File::Find::name }, no_chdir => 1}, -e 'blib' ? 'blib' : 'lib',);
+@files = grep { !m{Install/Files\.pm$} } @files;
 
 plan tests => @files * 3 + 4;
 

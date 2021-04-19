@@ -1,12 +1,34 @@
 # -*- mode: perl -*-
 use alienfile;
 
-plugin 'Probe::CommandLine' =>
-  (command => '...', args => ['--version']);
+configure {
+  requires 'Path::Tiny';
+};
+
+plugin 'Probe::CBuilder' => (libs => '-lpotrace');
+plugin 'Probe::CommandLine' => (command => 'potrace', args => ['--version'], secondary => 1);
 
 share {
-  start_url '';
-  plugin Download => (filter => qr//, version => qr//, bootstrap_ssl => 1);
+  my $version = '1.16';
+  start_url sprintf 'http://potrace.sourceforge.net/download/%s/potrace-%s.tar.gz', $version, $version;
+  plugin 'Download';
   plugin Extract => 'tar.gz';
   plugin 'Build::Autoconf';
+
+  build ['%{configure} --disable-shared --with-libpotrace', '%{make}', '%{make} install',];
+
+  after gather => sub {
+    my $build = shift;
+    require Path::Tiny;
+
+    my $prefix  = Path::Tiny->path($build->install_prop->{prefix})->absolute;
+    my $lib     = $prefix->child('lib')->stringify;
+    my $include = $prefix->child('include');
+    my $dynamic = $prefix->child('lib', 'dynamic');
+
+    $build->runtime_prop->{version}     = $version;
+    $build->runtime_prop->{cflags}      = "-I$include";
+    $build->runtime_prop->{libs}        = "-L$dynamic -lpotrace";
+    $build->runtime_prop->{libs_static} = "-L$lib -lpotrace";
+  };
 }
