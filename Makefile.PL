@@ -14,7 +14,8 @@ my %WriteMakefileArgs = (
   EXE_FILES      => [qw()],
   OBJECT         => '',
   BUILD_REQUIRES => {
-  'Path::Tiny' => '0'
+  'Path::Tiny' => '0',
+  'URI' => '0'
 }
 ,
   TEST_REQUIRES  => {

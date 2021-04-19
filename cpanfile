@@ -5,5 +5,6 @@ requires "perl" => "5.20.0"; # signatures
 requires 'Alien::Build';
 
 build_requires 'Path::Tiny';
+build_requires 'URI';
 
 test_requires "Test::More" => "0.88";
